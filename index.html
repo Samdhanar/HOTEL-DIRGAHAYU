@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hotel Dirgahayu Ponorogo </title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+  <style>
+    .hero {
+      background: url('assets/hero-nava.jpg') no-repeat center center;
+      background-size: cover;
+      height: 90vh;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .facility-icon {
+      font-size: 2rem;
+      color: #007bff;
+    }
+
+    footer {
+      background-color: #1a1a1a;
+      color: white;
+      padding: 40px 0;
+    }
+
+    /* --- Tata letak container kamar --- */
+    .display-flex {
+      display: flex;
+      /* Aktifkan Flexbox */
+      flex-wrap: wrap;
+      /* Biar responsif: turun ke bawah kalau sempit */
+      justify-content: center;
+      /* Tengah secara horizontal */
+      align-items: flex-start;
+      /* Rata atas */
+      gap: 20px;
+      /* Jarak antar kartu */
+    }
+
+    /* --- Samakan ukuran gambar di dalam card --- */
+    .card-img-top {
+      width: 100%;
+      /* Gambar selebar card */
+      height: 250px;
+      /* Tinggi tetap agar seragam */
+      object-fit: cover;
+      /* Potong gambar proporsional (tidak gepeng) */
+      border-radius: 8px 8px 0 0;
+      /* Opsional: sudut atas membulat */
+    }
+
+    /* --- Ukuran dan tampilan card agar konsisten --- */
+    #roomList .card {
+      width: 320px;
+      /* Ukuran seragam antar card */
+      min-height: 100%;
+      border: none;
+      overflow: hidden;
+      /* Potong elemen yang keluar */
+      transition: transform 0.2s ease;
+    }
+
+    /* --- Efek hover agar elegan --- */
+    #roomList .card:hover {
+      transform: scale(1.03);
+    }
+
+    .modal-content {
+      border-radius: 15px;
+      overflow: hidden;
+    }
+
+    .modal-body img {
+      max-height: 300px;
+      object-fit: cover;
+      width: 100%;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">Hotel Dirgahayu Ponorogo</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item"><a class="nav-link active" href="#">Beranda</a></li>
+          <li class="nav-item"><a class="nav-link" href="#about">Tentang</a></li>
+          <li class="nav-item"><a class="nav-link" href="#fasilitas">Fasilitas</a></li>
+          <li class="nav-item"><a class="nav-link" href="#fasilitas">Event & Layanan</a></li>
+          <li class="nav-item"><a class="nav-link" href="#kontak">Kontak</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-content container">
+      <h1 class="display-4 fw-bold">MOHON DICEK APA YANG SAYA TANDAI AGAR DI RUBAH SESUAI DENGAN NAMA PROJECT YANG BARU</h1>
+      <p class="lead">"Temukan ketenangan dan kenyamanan sejati di tengah pesona kota Ponorogo."</p>
+      <a href="#rooms" class="btn btn-primary btn-lg mt-3">Lihat Kamar</a>
+    </div>
+  </section>
+  <!-- Tentang Kami -->
+  <section id="about" class="py-5">
+    <div class="container">
+      <h2 class="text-center mb-4">Tentang Hotel Dirgahayu Ponorogo</h2>
+      <div class="row align-items-center">
+        <div class="col-md-6">
+          <p>Disesuaikan !!!!</p>
+          <ul>
+            <li> Disesuaikan !!!! </li>
+            <li> Disesuaikan !!!! </li>
+            <li> Disesuaikan !!!! </li>
+          </ul>
+        </div>
+        <div class="col-md-6">
+          <img src="assets/about.jpg" class="img-fluid rounded" alt="Tentang Kami">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Daftar Kamar -->
+  <section id="rooms" class="py-5 bg-light">
+    <div class="container">
+      <h2 class="text-center mb-4">Kamar Kami</h2>
+
+      <!-- Tombol & Form Pencarian -->
+      <div class="row mb-4 justify-content-center">
+        <div class="col-md-6">
+          <div class="input-group shadow-sm mb-4">
+            <input type="text" id="searchRoom" class="form-control" placeholder="Cari kamar berdasarkan nama..."
+              onkeyup="searchRoom()">
+            <button class="btn btn-primary" onclick="searchRoom()">Cari</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Daftar Kamar -->
+      <div class="container my-5">
+        <div class="row justify-content-center g-4" id="roomList">
+          <!-- Superior Room -->
+          <div class="col-md-4 room-card">
+            <div class="card shadow h-100 w-100">
+              <img src="image/kamar superior room.jpg" class="card-img-top" alt="Superior Room">
+              <div class="card-body d-flex flex-column">
+                <h5 class="fw-bold">Superior Room</h5>
+                <p>Kamar nyaman untuk perjalanan bisnis dan liburan singkat.</p>
+                <div class="mt-auto">
+                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalKamar1">
+                    Detail Kamar
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Deluxe Room -->
+          <div class="col-md-4 room-card">
+            <div class="card shadow h-100 w-100">
+              <img src="image/Deluxe room.jpg" class="card-img-top" alt="Deluxe Room">
+              <div class="card-body d-flex flex-column">
+                <h5 class="fw-bold">Deluxe Room</h5>
+                <p>Balkon pribadi dengan pemandangan indah pegunungan.</p>
+                <div class="mt-auto">
+                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalKamar2">
+                    Detail Kamar
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Suite Room -->
+          <div class="col-md-4 room-card">
+            <div class="card shadow h-100 w-100">
+              <img src="image/kamar suite room.jpg" class="card-img-top" alt="Suite Room">
+              <div class="card-body d-flex flex-column">
+                <h5 class="fw-bold">Suite Room</h5>
+                <p>Kamar eksklusif dengan layanan premium & ruang tamu.</p>
+                <div class="mt-auto">
+                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalKamar3">
+                    Detail Kamar
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ======================== MODAL KAMAR ======================== -->
+
+      <!-- Modal Superior Room -->
+      <div class="modal fade" id="modalKamar1" tabindex="-1" aria-labelledby="modalKamar1Label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title fw-bold" id="modalKamar1Label">Superior Room</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+              <img src="image/kamar superior room.jpg" class="img-fluid rounded mb-3" alt="Superior Room">
+              <p>
+                Nikmati kenyamanan dengan desain modern minimalis. Kamar ini cocok untuk perjalanan bisnis maupun
+                liburan singkat.
+              </p>
+              <ul>
+                <li>Ukuran kamar: 24 m²</li>
+                <li>Tempat tidur queen size</li>
+                <li>TV LED 32 inci, WiFi gratis</li>
+                <li>Kamar mandi dengan shower air panas</li>
+                <li>Termasuk sarapan untuk 2 orang</li>
+              </ul>
+              <p class="fw-bold">Harga: Rp 450.000 / malam</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+              <a href="https://wa.me/6285648526043?text=Saya%20ingin%20memesan%20kamar%20type%20Superior%0ATanggal%20booking%20:%0ALama%20menginap%20:"
+                target="_blank" class="btn btn-primary">
+                <i class="bi bi-whatsapp"></i> Pesan Sekarang
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal Deluxe Room -->
+      <div class="modal fade" id="modalKamar2" tabindex="-1" aria-labelledby="modalKamar2Label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title fw-bold" id="modalKamar2Label">Deluxe Room</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+              <img src="image/Deluxe room.jpg" class="img-fluid rounded mb-3" alt="Deluxe Room">
+              <p>
+                Rasakan suasana tenang dengan balkon pribadi dan pemandangan pegunungan. Dirancang untuk kenyamanan
+                maksimal.
+              </p>
+              <ul>
+                <li>Ukuran kamar: 32 m²</li>
+                <li>Balkon pribadi & kursi santai</li>
+                <li>AC, TV LED 40 inci, WiFi gratis</li>
+                <li>Kamar mandi dengan bathtub</li>
+                <li>Termasuk sarapan untuk 2 orang</li>
+              </ul>
+              <p class="fw-bold">Harga: Rp 650.000 / malam</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+              <a href="https://wa.me/6285648526043?text=Saya%20ingin%20memesan%20kamar%20type%20Deluxe%0ATanggal%20booking%20:%0ALama%20menginap%20:"
+                target="_blank" class="btn btn-primary">
+                <i class="bi bi-whatsapp"></i> Pesan Sekarang
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal Suite Room -->
+      <div class="modal fade" id="modalKamar3" tabindex="-1" aria-labelledby="modalKamar3Label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title fw-bold" id="modalKamar3Label">Suite Room</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+              <img src="image/kamar suite room.jpg" class="img-fluid rounded mb-3" alt="Suite Room">
+              <p>
+                Nikmati kemewahan Suite Room kami dengan ruang tamu pribadi dan layanan eksklusif.
+                Cocok untuk keluarga atau tamu VIP.
+              </p>
+              <ul>
+                <li>Ukuran kamar: 45 m²</li>
+                <li>Ruang tamu & meja kerja</li>
+                <li>AC, TV LED 50 inci, minibar, WiFi gratis</li>
+                <li>Kamar mandi dengan bathtub & shower air panas</li>
+                <li>Termasuk sarapan untuk 2 orang</li>
+              </ul>
+              <p class="fw-bold">Harga: Rp 950.000 / malam</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+              <a href="https://wa.me/6285648526043?text=Saya%20ingin%20memesan%20kamar%20type%20Suite%0ATanggal%20booking%20:%0ALama%20menginap%20:"
+                target="_blank" class="btn btn-primary">
+                <i class="bi bi-whatsapp"></i> Pesan Sekarang
+              </a>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+    </div>
+    </div>
+    <!-- Tidak ditemukan -->
+    <div id="noResult" class="text-center text-muted mt-4 d-none">
+      Kamar tidak ditemukan.
+    </div>
+  <!-- Script Pencarian -->
+  <script>
+    function searchRoom() {
+      const input = document.getElementById('searchRoom').value.toLowerCase();
+      const rooms = document.querySelectorAll('.room-card'); // ambil setiap kolom kamar
+      let found = false;
+
+      rooms.forEach(room => {
+        const title = room.querySelector('h5').textContent.toLowerCase();
+        if (title.includes(input)) {
+          room.style.display = 'flex'; // tampilkan jika cocok
+          found = true;
+        } else {
+          room.style.display = 'none'; // sembunyikan jika tidak cocok
+        }
+      });
+
+      // tampilkan pesan jika tidak ada hasil
+      const noResult = document.getElementById('noResult');
+      if (!found) {
+        noResult.classList.remove('d-none');
+      } else {
+        noResult.classList.add('d-none');
+      }
+    }
+  </script>
+  </section>
+
+  <!-- Bagian Layanan Hotel -->
+  <section id="layanan" class="py-5 bg-light">
+    <div class="container">
+      <div class="text-center mb-5">
+        <h2 class="fw-bold">Layanan Kami</h2>
+        <p class="text-muted">Nikmati berbagai layanan terbaik yang kami sediakan untuk kenyamanan Anda selama menginap.
+        </p>
+      </div>
+
+      <div class="row g-4">
+        <!-- Layanan 1 -->
+        <div class="col-md-4">
+          <div class="card h-100 text-center shadow-sm border-0">
+            <div class="card-body">
+              <i class="bi bi-cup-hot fs-1 text-primary mb-3"></i>
+              <h5 class="card-title fw-bold">Staf multibahasa</h5>
+              <p class="card-text text-muted">
+                Rasakan kehangatan budaya dn keramahan khas Ponorogo dari staf kami yang siap melayani dalam berbagai
+                bahasa.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Layanan 2 -->
+        <div class="col-md-4">
+          <div class="card h-100 text-center shadow-sm border-0">
+            <div class="card-body">
+              <i class="bi bi-spa fs-1 text-primary mb-3"></i>
+              <h5 class="card-title fw-bold">Check-in cepat</h5>
+              <p class="card-text text-muted">
+                Proses check-in yang mudah dan efesien, menghadirkan pengalaman menginap yang dimulai dengan kenyamanan.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Layanan 3 -->
+        <div class="col-md-4">
+          <div class="card h-100 text-center shadow-sm border-0">
+            <div class="card-body">
+              <i class="bi bi-car-front fs-1 text-primary mb-3"></i>
+              <h5 class="card-title fw-bold">Check-out cepat</h5>
+              <p class="card-text text-muted">
+                Akhiri masa menginap anda dengan tenang melalui layanan check-out yang cepat dan tanpa repot.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Layanan 4 -->
+        <div class="col-md-4">
+          <div class="card h-100 text-center shadow-sm border-0">
+            <div class="card-body">
+              <i class="bi bi-water fs-1 text-primary mb-3"></i>
+              <h5 class="card-title fw-bold">Meja resepsionis 24 jam</h5>
+              <p class="card-text text-muted">
+                Selalu ada untuk Anda, kapan pun Anda datang layanan resepsionis kami siap membantu selama 24 jam penuh.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Fasilitas -->
+        <section id="fasilitas" class="py-5">
+          <div class="container">
+            <h2 class="text-center mb-4">Fasilitas Kami</h2>
+            <div class="row text-center">
+              <div class="col-md-3 mb-4">
+                <div class="facility-icon mb-2"><i class="bi bi-car-front-fill"></i></div>
+                <h5>Parkir</h5>
+              </div>
+              <div class="col-md-3 mb-4">
+                <div class="facility-icon mb-2"><i class="bi bi-tree-fill"></i></div>
+                <h5>Taman</h5>
+              </div>
+              <div class="col-md-3 mb-4">
+                <div class="facility-icon mb-2"><i class="bi bi-snow"></i></div>
+                <h5>AC</h5>
+              </div>
+              <div class="col-md-3 mb-4">
+                <div class="facility-icon mb-2"><i class="bi bi-basket2-fill"></i></div>
+                <h5>Laundry</h5>
+              </div>
+              <div class="col-md-3 mb-4">
+                <div class="facility-icon mb-2"><i class="bi bi-wifi"></i></div>
+                <h5>WiFi Gratis</h5>
+              </div>
+            </div>
+
+          </div>
+      </div>
+  </section>
+  <!-- Wedding & Meeting Promo -->
+  <section class="py-5 bg-light">
+    <div class="container">
+      <h2 class="section-title text-center">Event & Layanan</h2>
+      <div class="row g-4">
+        <div class="col-md-12">
+          <div class="card shadow h-100">
+            <img src="image/meeting room.jpg" class="card-img-top" alt="Meeting">
+            <div class="card-body text-center">
+              <h5 class="fw-bold">Meeting & Event</h5>
+              <p>Ruang meeting profesional dengan fasilitas modern.</p>
+              <div class="modal-body">
+                <div class="row text-center">
+                  <!-- Paket Standard -->
+                  <div class="col-md-4 mb-3">
+                    <div class="card h-100 shadow-sm">
+                      <div class="card-body">
+                        <h5 class="card-title">Standard Package</h5>
+                        <h6 class="text-primary">Rp 5.000.000</h6>
+                        <p class="card-text">Cocok untuk acara kecil dengan fasilitas dasar.</p>
+                        <ul class="text-start">
+                          <li>Ruang acara kapasitas 50 orang</li>
+                          <li>Sound system standar</li>
+                          <li>1x Coffee Break</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Paket Silver -->
+                  <div class="col-md-4 mb-3">
+                    <div class="card h-100 shadow-sm border-primary">
+                      <div class="card-body">
+                        <h5 class="card-title">Silver Package</h5>
+                        <h6 class="text-success">Rp 10.000.000</h6>
+                        <p class="card-text">Pilihan ideal untuk acara menengah dengan layanan lebih
+                          lengkap.</p>
+                        <ul class="text-start">
+                          <li>Ruang acara kapasitas 150 orang</li>
+                          <li>Sound system premium</li>
+                          <li>2x Coffee Break + Lunch</li>
+                          <li>Dekorasi dasar</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Paket Premium -->
+                  <div class="col-md-4 mb-3">
+                    <div class="card h-100 shadow-lg border-warning">
+                      <div class="card-body">
+                        <h5 class="card-title">Premium Package</h5>
+                        <h6 class="text-danger">Rp 20.000.000</h6>
+                        <p class="card-text">Paket eksklusif untuk acara besar dengan fasilitas terbaik.</p>
+                        <ul class="text-start">
+                          <li>Ruang acara kapasitas 300 orang</li>
+                          <li>Sound system & lighting profesional</li>
+                          <li>2x Coffee Break + Lunch + Dinner</li>
+                          <li>Dekorasi mewah</li>
+                          <li>MC & Entertain</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Modal -->
+                  <!-- Modal Event Packages -->
+                  <div class="modal fade" id="modalEvent" tabindex="-1" aria-labelledby="modalEventLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-xl"> <!-- modal-xl agar lebih lebar -->
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="modalEventLabel">Event Packages</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer id="kontak">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4 mb-4">
+          <h5>Navana Hotel Tawangmangu</h5>
+          <p>Jl. Soerkarno Hatta, Bangunsari, Kec. Ponorogo, Kabupaten Ponorogo, Jawa Timur</p>
+          <p>Disesuaikan !!!!</p>
+        </div>
+        <div class="col-md-4 mb-4">
+          <h5>Ikuti Kami</h5>
+          <a href="#" class="text-white me-2">Facebook</a> DI beri link Sosmednya !!!!
+          <a href="#" class="text-white me-2">Instagram</a>
+          <a href="#" class="text-white">YouTube</a>
+        </div>
+        <div class="col-md-4 mb-4">
+          <h5>Berlangganan</h5>
+          <form>
+            <div class="input-group">
+              <input type="email" class="form-control" placeholder="Email anda">
+              <button class="btn btn-primary">Kirim</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="text-center mt-4">
+        <small>&copy; Disesaikan !!!!</small>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
